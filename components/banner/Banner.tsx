@@ -24,20 +24,22 @@ const Banner = () => {
     },
   };
   return (
-    <Swiper breakpoints={breakpoints}>
-      <SwiperSlide>
-        <Image src={banner1} alt="Banner 1" />
-      </SwiperSlide>
-      <SwiperSlide>
-        <Image src={banner2} alt="Banner 2" />
-      </SwiperSlide>
-      <SwiperSlide>
-        <Image src={banner3} alt="Banner 3" />
-      </SwiperSlide>
-      <SwiperSlide>
-        <Image src={banner4} alt="Banner 4" />
-      </SwiperSlide>
-    </Swiper>
+    <div className="m-auto w-full">
+      <Swiper breakpoints={breakpoints} className="mw-full">
+        <SwiperSlide>
+          <Image src={banner1} alt="Banner 1" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Image src={banner2} alt="Banner 2" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Image src={banner3} alt="Banner 3" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Image src={banner4} alt="Banner 4" />
+        </SwiperSlide>
+      </Swiper>
+    </div>
   );
 };
 

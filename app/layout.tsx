@@ -1,5 +1,6 @@
 import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/header/Header";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -19,7 +20,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={spaceGrotesk.className}>{children}</body>
+      <body
+        className={`${spaceGrotesk.className} bg-slate-100 overflow-x-hidden`}
+      >
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }

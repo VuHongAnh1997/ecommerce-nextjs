@@ -8,4 +8,14 @@ module.exports = {
       },
     ];
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "totoday.vn",
+        // port: "",
+        // pathname: "/account123/**",
+      },
+    ],
+  },
 };
