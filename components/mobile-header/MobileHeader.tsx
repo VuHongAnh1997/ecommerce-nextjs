@@ -16,18 +16,29 @@ interface MobileHeaderProps {
 const MobileHeader: React.FC<MobileHeaderProps> = ({ isOpen, onClose }) => {
   const categoriesState = useCategories();
   const [activeMenuIndex, setActiveMenuIndex] = useState(0);
-  const { updateCategorySelected } = useStore();
+  const {
+    updateCategorySelected,
+    updateParentCategorySelected,
+    updateSubCategories,
+    updateBreadScrumb,
+  } = useStore();
   const router = useRouter();
 
-  const onClickSelectCategory = (category: Category) => {
+  const onClickSelectCategory = (
+    category: Category,
+    parentCategory: Category
+  ) => {
     updateCategorySelected(category);
+    updateParentCategorySelected(parentCategory);
+    updateSubCategories(parentCategory.children);
+    updateBreadScrumb(["Trang chủ", category.name]);
     router.push(`/products/${category.id}`);
     onClose();
   };
 
   return (
     <div
-      className={`fixed top-0 bottom-0 left-0 right-0 bg-white text-white p-4 transform z-10 ${
+      className={`fixed top-0 bottom-0 left-0 right-0 bg-white text-white p-4 transform z-20 ${
         isOpen ? "translate-y-0" : "translate-y-full"
       } transition-transform duration-300`}
     >
@@ -71,7 +82,12 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({ isOpen, onClose }) => {
               <div key={item.id} className="mb-2.5">
                 <div
                   className="text-base text-green-400 capitalize"
-                  onClick={() => onClickSelectCategory(item)}
+                  onClick={() =>
+                    onClickSelectCategory(
+                      item,
+                      categoriesState[activeMenuIndex]
+                    )
+                  }
                 >
                   {item.name}
                 </div>
@@ -79,7 +95,12 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({ isOpen, onClose }) => {
                   <div
                     key={item2.id}
                     className="text-sm capitalize"
-                    onClick={() => onClickSelectCategory(item2)}
+                    onClick={() =>
+                      onClickSelectCategory(
+                        item2,
+                        categoriesState[activeMenuIndex]
+                      )
+                    }
                   >
                     {item2.name}
                   </div>

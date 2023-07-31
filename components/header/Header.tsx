@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import logo from "public/images/logo.png";
 import React, { useState } from "react";
-import Cart from "../cart/Cart";
+import CartIcon from "../cart-icon/CartIcon";
 import MobileHeader from "../mobile-header/MobileHeader";
 import Navbar from "../narbar/Navbar";
 import SearchInput from "../search-input/SearchInput";
@@ -45,7 +45,10 @@ const Header: React.FC = () => {
               onClick={handleOpenMenu}
             />
           </div>
-          <div className="w-2/6 md:hidden flex items-center grow">
+          <div
+            className="w-2/6 md:hidden flex items-center grow"
+            onClick={() => router.push("/")}
+          >
             <Image
               src={logo}
               alt="Logo image"
@@ -60,7 +63,7 @@ const Header: React.FC = () => {
               <SearchInput onSearch={handleSearch} />
             </div>
 
-            <Cart />
+            <CartIcon />
             <UserIcon
               className="h-6 w-6 text-gray-500 ml-6 cursor-pointer"
               onClick={() => router.push("/auth/login")}

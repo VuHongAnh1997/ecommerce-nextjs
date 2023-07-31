@@ -1,7 +1,7 @@
 interface NewArrivalsProp {}
 
 const NewArrivals: React.FC<NewArrivalsProp> = () => {
-  return <div>New Arrivals</div>;
+  return <div></div>;
 };
 
 export default NewArrivals;

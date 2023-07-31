@@ -14,7 +14,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div style={{ maxWidth: "1440px", margin: "0 auto" }}>
+    <div>
       <Banner />
       <Category />
     </div>

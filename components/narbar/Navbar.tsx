@@ -19,7 +19,12 @@ const MENU_ITEMS = [
 ];
 
 const Navbar: React.FC = () => {
-  const { updateCategorySelected } = useStore();
+  const {
+    updateCategorySelected,
+    updateBreadScrumb,
+    updateParentCategorySelected,
+    updateSubCategories,
+  } = useStore();
   const router = useRouter();
   const pathname = usePathname();
 
@@ -27,9 +32,15 @@ const Navbar: React.FC = () => {
   const [activeMenuIndex, setActiveMenuIndex] = useState(0);
   const [enableCategories, setEnableCategories] = useState(false);
 
-  const onClickSelectCategory = (category: Category) => {
+  const onClickSelectCategory = (
+    category: Category,
+    parentCategory: Category
+  ) => {
     updateCategorySelected(category);
+    updateParentCategorySelected(parentCategory);
+    updateSubCategories(parentCategory.children);
     router.push(`/products/${category.id}`);
+    updateBreadScrumb(["Trang chủ", category.name]);
   };
 
   return (
@@ -37,12 +48,16 @@ const Navbar: React.FC = () => {
       {MENU_ITEMS.map((item, index) => {
         if (item.url !== "/products") {
           return (
-            <div key={index} className="w-fit">
+            <div
+              key={index}
+              className="w-fit"
+              onClick={() => updateBreadScrumb(["Trang chủ", item.name])}
+            >
               <Link
                 href={item.url}
                 className={`hover:text-green-500 px-2.5 whitespace-nowrap ${
                   pathname.includes(item.url)
-                    ? "text-green-900 decoration-green-500 underline"
+                    ? "text-green-500 decoration-green-500 underline"
                     : ""
                 }`}
               >
@@ -60,7 +75,7 @@ const Navbar: React.FC = () => {
               <div
                 className={`hover:text-green-500 px-2.5 whitespace-nowrap ${
                   pathname.includes(item.url)
-                    ? "text-green-900 decoration-green-500 underline"
+                    ? "text-green-500 decoration-green-500 underline"
                     : ""
                 }`}
               >
@@ -80,7 +95,7 @@ const Navbar: React.FC = () => {
                               key={item.id}
                               className="items flex items-center w-max px-7 py-4 border border-slate-200"
                               onMouseEnter={() => setActiveMenuIndex(index)}
-                              onClick={() => onClickSelectCategory(item)}
+                              onClick={() => onClickSelectCategory(item, item)}
                             >
                               <Image
                                 src={ICONS[index]}
@@ -108,7 +123,10 @@ const Navbar: React.FC = () => {
                               <div
                                 className="p-2 text-emerald-500"
                                 onClick={() =>
-                                  onClickSelectCategory(itemLevel2)
+                                  onClickSelectCategory(
+                                    itemLevel2,
+                                    categoriesState[activeMenuIndex]
+                                  )
                                 }
                               >
                                 {itemLevel2.name}
@@ -118,7 +136,10 @@ const Navbar: React.FC = () => {
                                   key={itemLevel3.id}
                                   className="px-2 py-1"
                                   onClick={() =>
-                                    onClickSelectCategory(itemLevel3)
+                                    onClickSelectCategory(
+                                      itemLevel3,
+                                      categoriesState[activeMenuIndex]
+                                    )
                                   }
                                 >
                                   {itemLevel3.name}
